@@ -1,112 +1,160 @@
-# Latinoamérica Comparte - Frontend Web Client 🌎
+<div align="center">
 
-Bienvenido al repositorio del Frontend de **Latinoamérica Comparte**, una plataforma web dinámica e interactiva diseñada para conectar personas, empresas y comunidades en un ecosistema de colaboración regional con presencia en **Colombia, Argentina, Chile y Ecuador**.
+<br/>
 
-Este proyecto es una Single Page Application (SPA) construida con las últimas tecnologías web, fuertemente enfocada en la experiencia de usuario (UX), un diseño premium adaptable por país y un panel de administración robusto.
+# 🌎 Latinoamérica Comparte — Frontend Web Client
 
----
+**Plataforma colaborativa regional que conecta personas, empresas y comunidades**
+en Colombia 🇨🇴 · Argentina 🇦🇷 · Chile 🇨🇱 · Ecuador 🇪🇨
 
-## 🚀 Arquitectura y Stack Tecnológico
+<br/>
 
-El proyecto utiliza un stack moderno y eficiente para el desarrollo en el ecosistema React:
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=flat-square&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-EF0079?style=flat-square&logo=framer&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-- **Framework Core:** [React 19](https://react.dev/)
-- **Build Tool:** [Vite 7](https://vitejs.dev/) - Elegido por su velocidad extrema de compilación y Hot Module Replacement (HMR).
-- **Estilos y Diseño:** [Tailwind CSS 3.4](https://tailwindcss.com/) - Utilizado como framework de utilidades CSS para un diseño responsivo, rápido y altamente personalizable.
-- **Animaciones UI:** [Framer Motion 12](https://www.framer.com/motion/) - Implementado para transiciones fluidas de páginas, contadores numéricos al hacer scroll, menús interactivos y micro-interacciones.
-- **Enrutamiento:** Sistema de enrutamiento basado en estado (Custom Router), sincronizado estrechamente con el backend.
-- **Peticiones HTTP:** Fetch API nativa empaquetada en servicios modularizados (Axios-like design).
-
----
-
-## 🎨 Características Principales (Features)
-
-### 1. Sistema Multi-País Dinámico (Theming)
-El frontend está diseñado para reaccionar y adaptarse visualmente dependiendo de la URL o la selección del usuario. La plataforma soporta instancias para Latinoamérica (Global), Colombia, Argentina, Chile y Ecuador.
-- **Contexto Global (`useCountry` Hook):** Al cambiar de país, toda la interfaz (colores primarios, logos, métricas, textos descriptivos y testimonios) cambia dinámicamente sin necesidad de recargar la página.
-- **Componentes Dinámicos:** Componentes como `CountryAboutSection` y `CountryMissionAndCTA` renderizan información y paletas de colores exclusivas (ej. el morado de Latam vs. el azul de Argentina).
-
-### 2. Panel Administrativo Protegido (Dashboard)
-Un portal privado para la gestión de la plataforma con autenticación JWT y control de acceso basado en roles (RBAC).
-- **Rutas Protegidas (`ProtectedRoute`):** El acceso al `/admin` está restringido para usuarios sin sesión.
-- **Vistas Basadas en Roles:**
-  - **Superadmin:** Puede ver y gestionar el contenido de todos los países, además del módulo de Solicitudes (Contacto).
-  - **Admin País:** La interfaz se auto-filtra (Scope) para mostrar y permitir la edición únicamente del contenido perteneciente a su país. La opción de "Solicitudes" globales se oculta automáticamente de su navegación.
-  - **Editor:** Acceso limitado a la redacción y gestión básica de contenido.
-- **Gestor de Contenido:** Módulos dedicados para la administración (CRUD) de *Noticias*, *Testimonios* y *Usuarios*.
-
-### 3. Componentes UI Premium
-- **Header Inteligente (`PublicHeader`):** Barra de navegación con efecto "glassmorphism", detector de scroll para cambio de estilos, e indicador animado con física de resortes (spring) usando Framer Motion.
-- **Modales y Alertas:** Componentes transversales reutilizables como `ConfirmButton` y estados asíncronos (`LoadingState`, `ErrorState`, `EmptyState`) para un manejo elegante de los errores de API.
+</div>
 
 ---
 
-## 📂 Estructura de Directorios
+## Tabla de Contenidos
 
-```text
+- [Acerca del Proyecto](#-acerca-del-proyecto)
+- [Stack Tecnológico](#-stack-tecnológico)
+- [Características Principales](#-características-principales)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Instalación y Uso Local](#️-instalación-y-uso-local)
+- [Conexión con el Backend](#-conexión-con-el-backend)
+
+---
+
+## 📌 Acerca del Proyecto
+
+**Latinoamérica Comparte** es una Single Page Application (SPA) diseñada con foco en experiencia de usuario premium, theming dinámico por país y un panel de administración robusto con control de acceso por roles.
+
+El frontend consume la API **Colcom API** (NestJS) y está preparado para escalar junto a las comunidades de la región.
+
+---
+
+## 🛠 Stack Tecnológico
+
+| Capa | Tecnología | Razón de elección |
+|---|---|---|
+| Framework | React 19 | Ecosistema maduro, Server Components ready |
+| Build Tool | Vite 7 | HMR ultrarrápido, compilación optimizada |
+| Estilos | Tailwind CSS 3.4 | Diseño responsivo con utilidades componibles |
+| Animaciones | Framer Motion 12 | Transiciones fluidas y microinteracciones con física de resortes |
+| Enrutamiento | Custom Router (state-based) | Sincronización estrecha con el backend |
+| HTTP Client | Fetch API (modularizada) | Sin dependencias externas, patrón Axios-like |
+
+---
+
+## ✨ Características Principales
+
+### 🗺 Sistema Multi-País Dinámico (Theming)
+
+La interfaz reacciona y se adapta visualmente según el país activo — sin recargar la página.
+
+- **Hook `useCountry`:** Cambia en tiempo real colores primarios, logos, métricas, textos y testimonios.
+- **Componentes Dinámicos:** `CountryAboutSection` y `CountryMissionAndCTA` renderizan paletas exclusivas por país (ej. morado Latam vs. azul Argentina).
+- **Países soportados:** Latinoamérica (Global), Colombia, Argentina, Chile y Ecuador.
+
+---
+
+### 🔐 Panel Administrativo Protegido (Dashboard)
+
+Portal privado con autenticación JWT y Control de Acceso Basado en Roles (RBAC).
+
+| Rol | Acceso |
+|---|---|
+| **Superadmin** | Gestión de contenido de todos los países + módulo global de Solicitudes |
+| **Admin País** | Vista auto-filtrada (Scope) a su país; Solicitudes globales ocultas |
+| **Editor** | Redacción y gestión básica de contenido |
+
+- **`ProtectedRoute`:** El acceso a `/admin` está completamente restringido sin sesión activa.
+- **Gestión de Contenido (CRUD):** Módulos para *Noticias*, *Testimonios* y *Usuarios*.
+
+---
+
+### 🎨 Componentes UI Premium
+
+- **`PublicHeader` Inteligente:** Glassmorphism + detector de scroll + indicador animado con física de resortes (Framer Motion).
+- **Modales y Alertas Reutilizables:** `ConfirmButton` con estados asíncronos (`LoadingState`, `ErrorState`, `EmptyState`) para un manejo elegante de errores de API.
+
+---
+
+## 📂 Estructura del Proyecto
+
+```
 colcom-web/
-├── public/                 # Recursos públicos accesibles directamente (Favicons, webmanifest)
+├── public/                  # Recursos estáticos directos (favicons, webmanifest)
 ├── src/
-│   ├── api/                # Endpoints agrupados por dominio (noticias.api.js, auth.api.js, etc.)
-│   ├── assets/             # Recursos estáticos empaquetados por Vite (Logos, imágenes, videos HD)
-│   ├── components/         #
-│   │   ├── admin/          # Componentes exclusivos del Dashboard (Formularios, Tablas)
-│   │   ├── common/         # Componentes transversales (Botones, Badges, Loaders)
-│   │   └── public/         # Secciones visuales del Landing Page (Hero, Misión, CTA)
-│   ├── data/               # Diccionarios de datos estáticos (ej. config de países: countryLogos.ts)
-│   ├── hooks/              # Custom Hooks de React (useAuth.js, useCountry.js)
-│   ├── layouts/            # Wrappers estructurales (AdminLayout con Sidebar, PublicLayout con Footer)
-│   ├── pages/              # Vistas completas de la aplicación
-│   │   ├── admin/          # Ej: DashboardPage.jsx, ContentListPage.jsx
-│   │   └── public/         # Ej: LandingPage.tsx, ContactPage.jsx
-│   ├── routes/             # Lógica central del Router y gestión de URLs
-│   ├── utils/              # Formateadores de fecha, constantes compartidas y validadores
-│   ├── index.css           # Punto de entrada de Tailwind y variables globales CSS
-│   └── main.tsx            # Punto de montaje principal de la aplicación React
-├── index.html              # Plantilla HTML raíz
-├── tailwind.config.js      # Definición del Design System (Colores brand, breakpoints)
-└── vite.config.js          # Configuración de Vite, plugins y Proxy para el entorno local
+│   ├── api/                 # Servicios HTTP agrupados por dominio (noticias.api.js, auth.api.js…)
+│   ├── assets/              # Recursos empaquetados por Vite (logos, imágenes, videos HD)
+│   ├── components/
+│   │   ├── admin/           # Componentes del Dashboard (formularios, tablas)
+│   │   ├── common/          # Componentes transversales (botones, badges, loaders)
+│   │   └── public/          # Secciones del Landing Page (Hero, Misión, CTA)
+│   ├── data/                # Diccionarios estáticos (countryLogos.ts, config de países)
+│   ├── hooks/               # Custom Hooks (useAuth.js, useCountry.js)
+│   ├── layouts/             # Wrappers estructurales (AdminLayout + Sidebar, PublicLayout + Footer)
+│   ├── pages/
+│   │   ├── admin/           # DashboardPage.jsx, ContentListPage.jsx…
+│   │   └── public/          # LandingPage.tsx, ContactPage.jsx…
+│   ├── routes/              # Lógica central del Router y gestión de URLs
+│   ├── utils/               # Formateadores de fecha, constantes y validadores
+│   ├── index.css            # Punto de entrada de Tailwind y variables CSS globales
+│   └── main.tsx             # Punto de montaje principal de React
+├── index.html               # Plantilla HTML raíz
+├── tailwind.config.js       # Design System (colores brand, breakpoints)
+└── vite.config.js           # Configuración de Vite, plugins y proxy local
 ```
 
 ---
 
-## 🛠️ Instalación y Configuración Local
+## ⚙️ Instalación y Uso Local
 
 ### Pre-requisitos
-- **Node.js** (v18 o superior recomendado)
-- **npm** o **pnpm** (gestor de paquetes)
+
+- **Node.js** v18 o superior
+- **npm** o **pnpm**
 
 ### Pasos
 
-1. **Clonar el repositorio y acceder a la carpeta del proyecto:**
-   ```bash
-   git clone <url-del-repo>
-   cd frontendFullstack-web/colcom-web
-   ```
-
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
-
-3. **Configurar el entorno (si aplica):**
-   Revisa si necesitas un archivo `.env` para apuntar a un backend diferente. Actualmente, las llamadas a la API `/api/*` están siendo interceptadas por el servidor de desarrollo de Vite (Proxy configurado en `vite.config.js`) y redirigidas a la API de producción en Render.
-
-4. **Levantar el servidor de desarrollo:**
-   ```bash
-   npm run dev
-   ```
-   *El proyecto se ejecutará en `http://localhost:5173` (o el puerto disponible que indique la consola).*
-
-### Construcción para Producción
-
-Para generar los archivos estáticos listos para ser desplegados en un servidor (como Render, Vercel, Netlify, o Nginx):
+**1. Clonar el repositorio**
 
 ```bash
-npm run build
+git clone <url-del-repo>
+cd frontendFullstack-web/colcom-web
 ```
-Esto generará una carpeta `dist/` con el código minificado y optimizado. Para probar la build localmente antes de subirla:
+
+**2. Instalar dependencias**
+
 ```bash
+npm install
+```
+
+**3. Configurar variables de entorno** *(si aplica)*
+
+Revisa si necesitas un archivo `.env` para apuntar a un backend diferente al de producción. El proxy de Vite ya redirige `/api/*` automáticamente en desarrollo.
+
+**4. Levantar el servidor de desarrollo**
+
+```bash
+npm run dev
+```
+
+> La app correrá en `http://localhost:5173` (o el puerto disponible indicado en consola).
+
+### Build de Producción
+
+```bash
+# Generar archivos estáticos optimizados en /dist
+npm run build
+
+# Previsualizar la build localmente antes de desplegar
 npm run preview
 ```
 
@@ -114,21 +162,26 @@ npm run preview
 
 ## 🌐 Conexión con el Backend
 
-El frontend está diseñado para consumir la API de **Colcom API** (NestJS). En el entorno de desarrollo, el archivo `vite.config.js` maneja los problemas de CORS (Cross-Origin Resource Sharing) actuando como proxy:
+El frontend consume la API **Colcom API** (NestJS). En desarrollo, Vite actúa como proxy para evitar problemas de CORS:
 
 ```javascript
-// Fragmento de vite.config.js
+// vite.config.js
 server: {
   proxy: {
     '/api': {
-      target: 'https://colcom-api-web.onrender.com', // API en Producción
+      target: 'https://colcom-api-web.onrender.com',
       changeOrigin: true,
     }
   }
 }
 ```
 
-Al compilar para producción, asegúrate de que el frontend y backend compartan dominio o que el backend autorice los orígenes correspondientes.
+En producción, asegúrate de que el frontend y el backend compartan dominio, o que el backend autorice los orígenes correspondientes en su configuración de CORS.
 
 ---
-*Diseñado con pasión para escalar y evolucionar junto a las comunidades de la región.* 🌎
+
+<div align="center">
+
+Diseñado con pasión para escalar y evolucionar junto a las comunidades de la región 🌎
+
+</div>

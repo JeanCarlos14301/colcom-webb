@@ -57,7 +57,7 @@ export async function apiRequest<T>(
       headers: { ...normalizeHeaders(options.body), ...(options.headers as any) }
     });
     
-    if (envelope?.statusCode === 401) {
+    if (envelope?.statusCode === 401 && !path.startsWith('/public/')) {
       clearSession();
       if (!location.pathname.includes('/login')) {
         history.pushState({}, '', '/login');
@@ -92,7 +92,7 @@ export async function apiRequest<T>(
 
   const envelope = await response.json().catch(() => null) as ApiEnvelope<T> | null;
 
-  if (response.status === 401) {
+  if (response.status === 401 && !path.startsWith('/public/')) {
     clearSession();
     if (!location.pathname.includes('/login')) {
       history.pushState({}, '', '/login');

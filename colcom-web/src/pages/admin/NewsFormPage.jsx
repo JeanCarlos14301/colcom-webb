@@ -70,11 +70,15 @@ export function NewsFormPage({ id }) {
     event.preventDefault();
     setSaving(true);
     setError('');
+    const finalPaisId = form.pais_id || userCountryId;
     const payload = {
-      ...form,
-      pais_id: form.pais_id || userCountryId,
+      titulo: form.titulo,
+      estado: form.estado,
       slug: form.slug || slugify(form.titulo),
     };
+    if (form.resumen) payload.resumen = form.resumen;
+    if (form.contenido) payload.contenido = form.contenido;
+    if (finalPaisId) payload.pais_id = finalPaisId;
     try {
       let currentId = id;
       if (editing) {
@@ -90,7 +94,8 @@ export function NewsFormPage({ id }) {
       
       navigate('/admin/noticias');
     } catch (err) {
-      setError(err.message || 'Error al guardar la noticia');
+      const msgs = err.errors ? err.errors.join(', ') : err.message;
+      setError(msgs || 'Error al guardar la noticia');
     } finally {
       setSaving(false);
     }

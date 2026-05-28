@@ -37,8 +37,11 @@ export function PublicHeader() {
   const themeColor = getThemeColor(activeSlug);
 
   const basePath = activeSlug === 'latam' ? '/' : `/${activeSlug}`;
+  
+  
 
   const navLinks: NavLinkConfig[] = [
+  //  {id: 'inicio', label: 'Inicio', path: `${basePath}` },
     { id: 'somos', label: 'Quiénes somos', path: `${basePath}#somos` },
     { id: 'impacto', label: 'Nuestro impacto', path: `${basePath}#impacto` },
     { id: 'equipo', label: 'Equipo', path: `${basePath}#equipo` },
@@ -106,14 +109,6 @@ export function PublicHeader() {
               )}
             </motion.button>
           ))}
-          <motion.button
-            className="btn btn-primary ml-2 px-4 py-2 text-white font-bold"
-            onClick={() => navigate('/login')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Login admin
-          </motion.button>
         </nav>
       </header>
 
@@ -143,19 +138,6 @@ export function PublicHeader() {
                 {link.label}
               </motion.button>
             ))}
-            <motion.button
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08 + navLinks.length * 0.05, duration: 0.35 }}
-              className="btn btn-primary text-xl font-bold px-8 py-3 mt-4"
-              onClick={() => {
-                setOpen(false);
-                navigate('/login');
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Login admin
-            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

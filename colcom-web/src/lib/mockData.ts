@@ -1,4 +1,4 @@
-export const MOCK_DB_KEY = 'colcom_mock_db_v2';
+export const MOCK_DB_KEY = 'colcom_mock_db_v3';
 
 const initialData = {
   users: [
@@ -13,16 +13,17 @@ const initialData = {
     { id: 'ecu', nombre: 'Ecuador', slug: 'ecuador', estado: 'activo' },
   ],
   noticias: [
-    { id: 'n1', titulo: 'Noticia 1 Argentina', slug: 'noticia-1', resumen: 'Resumen 1', contenido: '<p>Contenido</p>', pais_id: 'arg', estado: 'publicado', fecha_publicacion: new Date().toISOString(), created_at: new Date().toISOString() },
-    { id: 'n2', titulo: 'Noticia 2 Chile', slug: 'noticia-2', resumen: 'Resumen 2', contenido: '<p>Contenido</p>', pais_id: 'chi', estado: 'publicado', fecha_publicacion: new Date().toISOString(), created_at: new Date().toISOString() },
+    { id: 'n1', titulo: 'Noticia 1 Argentina', slug: 'noticia-1-arg', resumen: 'Resumen Argentina', contenido: '<p>Contenido Argentina</p>', pais_id: 'arg', estado: 'publicado', fecha_publicacion: new Date().toISOString(), created_at: new Date().toISOString() },
+    { id: 'n2', titulo: 'Noticia 1 Chile', slug: 'noticia-1-chi', resumen: 'Resumen Chile', contenido: '<p>Contenido Chile</p>', pais_id: 'chi', estado: 'publicado', fecha_publicacion: new Date().toISOString(), created_at: new Date().toISOString() },
+    { id: 'n3', titulo: 'Lanzamiento en Colombia', slug: 'noticia-col-1', resumen: 'Lanzamiento oficial', contenido: '<p>Iniciamos operaciones en Colombia.</p>', pais_id: 'col', estado: 'publicado', fecha_publicacion: new Date().toISOString(), created_at: new Date().toISOString() },
+    { id: 'n4', titulo: 'Nueva alianza en Ecuador', slug: 'noticia-ecu-1', resumen: 'Nueva alianza estratégica', contenido: '<p>Ecuador suma nuevos aliados.</p>', pais_id: 'ecu', estado: 'publicado', fecha_publicacion: new Date().toISOString(), created_at: new Date().toISOString() },
   ],
   testimonios: [
-    { id: 't1', nombre: 'Juan Pérez', cargo: 'CEO', empresa: 'Empresa A', contenido: 'Excelente servicio en la plataforma.', destacado: true, pais_id: 'arg', estado: 'publicado', created_at: new Date().toISOString() },
-    { id: 't2', nombre: 'María Silva', cargo: 'Directora', empresa: 'Fundación Vida', contenido: 'Logramos conectar con cientos de mentores rápidamente.', destacado: true, pais_id: 'arg', estado: 'publicado', created_at: new Date().toISOString() },
-    { id: 't3', nombre: 'Carlos Ruiz', cargo: 'Emprendedor', empresa: 'TechSur', contenido: 'Una iniciativa fantástica que nos abrió muchas puertas.', destacado: false, pais_id: 'arg', estado: 'publicado', created_at: new Date().toISOString() },
-    { id: 't4', nombre: 'Ana Gómez', cargo: 'Gerente', empresa: 'AgroPlus', contenido: 'El impacto regional que están logrando es increíble.', destacado: true, pais_id: 'arg', estado: 'publicado', created_at: new Date().toISOString() },
-    { id: 't5', nombre: 'Luis Martínez', cargo: 'Consultor', empresa: 'Independiente', contenido: 'Me encanta ser parte de esta comunidad tan activa.', destacado: false, pais_id: 'arg', estado: 'publicado', created_at: new Date().toISOString() },
-    { id: 't6', nombre: 'Sofía Castro', cargo: 'Voluntaria', empresa: 'ONG Sumar', contenido: 'Ver los resultados del trabajo en conjunto es inspirador.', destacado: true, pais_id: 'arg', estado: 'publicado', created_at: new Date().toISOString() },
+    { id: 't1', nombre: 'Juan Pérez (Arg)', cargo: 'CEO', empresa: 'Empresa A', contenido: 'Excelente servicio en la plataforma.', destacado: true, pais_id: 'arg', estado: 'publicado', created_at: new Date().toISOString() },
+    { id: 't2', nombre: 'María Silva (Chi)', cargo: 'Directora', empresa: 'Fundación Vida', contenido: 'Logramos conectar con cientos de mentores rápidamente.', destacado: true, pais_id: 'chi', estado: 'publicado', created_at: new Date().toISOString() },
+    { id: 't3', nombre: 'Carlos Ruiz (Col)', cargo: 'Emprendedor', empresa: 'TechSur', contenido: 'Una iniciativa fantástica que nos abrió muchas puertas.', destacado: false, pais_id: 'col', estado: 'publicado', created_at: new Date().toISOString() },
+    { id: 't4', nombre: 'Ana Gómez (Ecu)', cargo: 'Gerente', empresa: 'AgroPlus', contenido: 'El impacto regional que están logrando es increíble.', destacado: true, pais_id: 'ecu', estado: 'publicado', created_at: new Date().toISOString() },
+    { id: 't5', nombre: 'Luis Martínez (Col)', cargo: 'Consultor', empresa: 'Independiente', contenido: 'Me encanta ser parte de esta comunidad tan activa.', destacado: true, pais_id: 'col', estado: 'publicado', created_at: new Date().toISOString() },
   ],
   solicitudes: [
     { id: 's1', nombre: 'Usuario Interesado', correo: 'interesado@test.com', telefono: '123456789', finalidad: 'Contacto', mensaje: 'Quiero más info', pais_slug: 'argentina', estado: 'pendiente', created_at: new Date().toISOString() },

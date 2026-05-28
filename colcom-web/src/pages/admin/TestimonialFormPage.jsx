@@ -69,7 +69,18 @@ export function TestimonialFormPage({ id }) {
     setSaving(true);
     setError('');
     try {
-      const payload = { ...form, pais_id: form.pais_id || userCountryId };
+      const finalPaisId = form.pais_id || userCountryId;
+      const payload = {
+        nombre: form.nombre,
+        contenido: form.contenido,
+        estado: form.estado,
+        destacado: form.destacado,
+      };
+      if (form.cargo) payload.cargo = form.cargo;
+      if (form.empresa) payload.empresa = form.empresa;
+      if (form.instagram_url) payload.instagram_url = form.instagram_url;
+      if (form.facebook_url) payload.facebook_url = form.facebook_url;
+      if (finalPaisId) payload.pais_id = finalPaisId;
       let currentId = id;
       if (editing) {
         await testimoniosApi.update(id, payload);
@@ -84,7 +95,8 @@ export function TestimonialFormPage({ id }) {
       
       navigate('/admin/testimonios');
     } catch (err) {
-      setError(err.message || 'Error al guardar el testimonio');
+      const msgs = err.errors ? err.errors.join(', ') : err.message;
+      setError(msgs || 'Error al guardar el testimonio');
     } finally {
       setSaving(false);
     }

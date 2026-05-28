@@ -6,7 +6,7 @@ const unwrap = async (promise) => {
 };
 
 export const paisesApi = {
-  publicActive: () => unwrap(apiRequest('/paises')),
+  publicActive: () => unwrap(apiRequest('/public/paises')),
   active: () => unwrap(apiRequest('/paises')),
   all: () => unwrap(apiRequest('/paises')),
   getById: (id) => apiRequest(`/paises/${id}`),

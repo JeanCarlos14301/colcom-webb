@@ -108,7 +108,7 @@ export function AdminLayout({ children }) {
         </div>
 
         <nav className="flex-1 px-4 space-y-2 mt-4">
-          {navItems.map(([label, path, visible, icon], idx) => {
+          {navItems.filter(([, , visible]) => visible).map(([label, path, visible, icon], idx) => {
             const isActive = currentPath.startsWith(path);
             return (
               <motion.button

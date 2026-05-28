@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://colcom-api-web.onrender.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
         secure: false,
       }

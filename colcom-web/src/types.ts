@@ -26,6 +26,7 @@ export interface User {
   email?: string;
   rol: Role;
   pais_id: string | null;
+  pais_slug?: string;
   estado?: 'activo' | 'inactivo';
 }
 

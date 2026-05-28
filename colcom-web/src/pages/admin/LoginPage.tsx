@@ -5,12 +5,12 @@ import { useCountry } from '../../hooks/useCountry';
 import latLogo from '../../assets/imgs/latComparte.png';
 import quieto from '../../assets/imgs/quieto.png';
 import ojosTapados from '../../assets/imgs/ojosTapados.png';
-import tapados from '../../assets/imgs/tapados.mp4';
-import destapados from '../../assets/imgs/destapados.mp4';
+import tapados from '../../assets/imgs/tapados.gif';
+import destapados from '../../assets/imgs/destapados.gif';
 
 export function LoginPage() {
   const { login } = useAuth();
-  const { activeCountry } = useCountry();
+  const { activeCountry, setCountryBySlug } = useCountry();
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,22 +20,24 @@ export function LoginPage() {
   const [mascotState, setMascotState] = useState<'idle' | 'covering' | 'covered' | 'uncovering'>('idle');
 
   React.useEffect(() => {
+    let timeout: NodeJS.Timeout;
     if (passwordActive) {
       setMascotState('covering');
+      // Asumimos que el gif de taparse dura unos 800ms
+      timeout = setTimeout(() => {
+        setMascotState('covered');
+      }, 800);
     } else {
-      if (mascotState === 'covering' || mascotState === 'covered') {
-        setMascotState('uncovering');
-      }
+      setMascotState(prev => {
+        if (prev === 'idle') return 'idle';
+        return 'uncovering';
+      });
+      timeout = setTimeout(() => {
+        setMascotState('idle');
+      }, 800);
     }
+    return () => clearTimeout(timeout);
   }, [passwordActive]);
-
-  const handleVideoEnded = () => {
-    if (mascotState === 'covering') {
-      setMascotState('covered');
-    } else if (mascotState === 'uncovering') {
-      setMascotState('idle');
-    }
-  };
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -43,7 +45,12 @@ export function LoginPage() {
     setLoading(true);
 
     try {
-      await login(credentials.username, credentials.password);
+      const user = await login(credentials.username, credentials.password);
+      if (user?.rol === 'superadmin') {
+        setCountryBySlug('latam');
+      } else if (user?.pais_slug) {
+        setCountryBySlug(user.pais_slug);
+      }
       navigate('/admin/dashboard');
     } catch (err: any) {
       setError(err.message || 'Error al iniciar sesión');
@@ -92,22 +99,23 @@ export function LoginPage() {
         }}
       />
 
-      {/* Contenedor Principal (Mascota + Form) */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center md:justify-around gap-12 mt-12">
+      {/* Contenedor Principal (Form centrado) */}
+      <div className="relative z-10 w-full max-w-md mx-auto flex flex-col items-center mt-12">
         
-        {/* Mascota Interactiva (Oculta en móviles) */}
-        <div className="hidden md:flex w-[450px] h-[450px] items-center justify-center relative select-none pointer-events-none">
-          {mascotState === 'idle' && <img src={quieto} alt="Mascot Idle" className="w-full h-full object-contain drop-shadow-2xl" />}
-          {mascotState === 'covering' && <video key="covering" src={tapados} autoPlay muted playsInline onEnded={handleVideoEnded} className="w-full h-full object-contain drop-shadow-2xl" />}
-          {mascotState === 'covered' && <img src={ojosTapados} alt="Mascot Covered" className="w-full h-full object-contain drop-shadow-2xl" />}
-          {mascotState === 'uncovering' && <video key="uncovering" src={destapados} autoPlay muted playsInline onEnded={handleVideoEnded} className="w-full h-full object-contain drop-shadow-2xl" />}
-        </div>
+        {/* Formulario con Mascota asomándose */}
+        <div className="relative w-full">
+          {/* Mascota Interactiva posicionada sobre el form */}
+          <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-64 h-64 flex items-center justify-center select-none pointer-events-none z-20">
+            {mascotState === 'idle' && <img src={quieto} alt="Mascot Idle" className="w-full h-full object-contain drop-shadow-2xl" />}
+            {mascotState === 'covering' && <img key="covering" src={tapados} alt="Mascot Covering" className="w-full h-full object-contain drop-shadow-2xl" />}
+            {mascotState === 'covered' && <img src={ojosTapados} alt="Mascot Covered" className="w-full h-full object-contain drop-shadow-2xl" />}
+            {mascotState === 'uncovering' && <img key="uncovering" src={destapados} alt="Mascot Uncovering" className="w-full h-full object-contain drop-shadow-2xl" />}
+          </div>
 
-        {/* Formulario */}
-        <form
-          onSubmit={submit}
-          className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 w-full max-w-[450px] flex flex-col items-center border border-white/20 backdrop-blur-sm"
-        >
+          <form
+            onSubmit={submit}
+            className="relative z-10 bg-white/90 rounded-[2.5rem] shadow-2xl p-8 md:p-12 w-full flex flex-col items-center border border-white backdrop-blur-xl pt-16"
+          >
         <img
           src={latLogo}
           alt="Latinoamérica Comparte"
@@ -261,7 +269,8 @@ export function LoginPage() {
         >
           {loading ? 'INGRESANDO...' : 'INGRESAR'}
         </button>
-      </form>
+          </form>
+        </div>
       </div>
     </div>
   );

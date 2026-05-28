@@ -53,9 +53,10 @@ export function CountryProvider({ children }) {
   }, []);
 
   const activeCountry = useMemo(() => {
-    const foundStatic = countryLogos.find((c) => c.slug === activeSlug) || countryLogos.find((c) => c.slug === FALLBACK_SLUG) || countryLogos[0];
+    const cleanSlug = (activeSlug || '').toLowerCase().trim();
+    const foundStatic = countryLogos.find((c) => c.slug.toLowerCase() === cleanSlug) || countryLogos.find((c) => c.slug === FALLBACK_SLUG) || countryLogos[0];
     
-    if (activeSlug === 'latam' || !countries.length) {
+    if (cleanSlug === 'latam' || !countries.length) {
       return {
         id: null,
         nombre: foundStatic?.name || 'Latinoamérica',
@@ -65,7 +66,7 @@ export function CountryProvider({ children }) {
       };
     }
 
-    const foundApi = countries.find((c) => c.slug === activeSlug) || countries.find((c) => c.slug === FALLBACK_SLUG) || countries[0];
+    const foundApi = countries.find((c) => c.slug.toLowerCase() === cleanSlug) || countries.find((c) => c.slug === FALLBACK_SLUG) || countries[0];
     
     if (foundApi) {
       return { ...foundStatic, ...foundApi, colors: foundStatic?.colors || [] };

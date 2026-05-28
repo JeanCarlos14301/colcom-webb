@@ -11,6 +11,7 @@ export function AdminLayout({ children }) {
   const { user, logout } = useAuth();
   const { activeCountry, countries, setCountryBySlug } = useCountry();
   const [needsSecuritySetup, setNeedsSecuritySetup] = useState(false);
+  const [isSyncingLogo, setIsSyncingLogo] = useState(true);
 
   useEffect(() => {
     // Only check if we are not already on the security page
@@ -24,6 +25,27 @@ export function AdminLayout({ children }) {
         .catch(() => {});
     }
   }, []);
+
+  // Enforce user country if not superadmin
+  useEffect(() => {
+    if (user?.rol && user.rol !== 'superadmin' && user.pais_id) {
+      // If we already know the user's slug from login, and it matches, we are done syncing!
+      if (user.pais_slug && activeCountry?.slug === user.pais_slug) {
+        setIsSyncingLogo(false);
+        return;
+      }
+      if (countries.length > 0) {
+        const userCountry = countries.find(c => c.id === user.pais_id);
+        if (userCountry && activeCountry?.slug !== userCountry.slug) {
+          setCountryBySlug(userCountry.slug);
+        } else {
+          setIsSyncingLogo(false); // Sync finished
+        }
+      }
+    } else {
+      setIsSyncingLogo(false); // Superadmin doesn't need to sync
+    }
+  }, [user, countries, activeCountry?.slug, setCountryBySlug]);
 
   const navItems = [
     ['Dashboard', '/admin/dashboard', true, (
@@ -76,8 +98,12 @@ export function AdminLayout({ children }) {
       {/* Sidebar */}
       <aside className="w-64 bg-[#1a0525] border-r border-[#3a1555] flex flex-col pt-6 flex-shrink-0 z-20">
         <div className="px-6 mb-10 cursor-pointer" onClick={() => navigate('/admin/dashboard')}>
-          <div className="bg-white/95 p-3 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-            <img src={latLogo} alt="Logo" className="w-full object-contain" />
+          <div className="bg-white/95 p-3 rounded-2xl shadow-sm hover:shadow-md transition-shadow min-h-[60px] flex items-center justify-center">
+            {isSyncingLogo ? (
+              <div className="w-full h-8 bg-gray-200 animate-pulse rounded-lg"></div>
+            ) : (
+              <img src={activeCountry?.logoSrc || latLogo} alt="Logo" className="w-full object-contain" />
+            )}
           </div>
         </div>
 
